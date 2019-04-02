@@ -14,15 +14,14 @@ class App extends Component {
     setInterval(() => {
       var newGrid = this.newDay(this.state.grid);
       this.setState({grid: newGrid})
-    }, 1000);
+    }, 100);
   }
 
   createGrid(x, y) {
     var grid = [...Array(x).keys()]
       .map(x => [...Array(y).keys()]
-        .map(y => Math.random() < 0.1)
+        .map(y => Math.random() < 0.25)
       );
-
     return grid;
   }
 
@@ -58,11 +57,34 @@ class App extends Component {
         amountOfNeighbors++;
       }
     }
+    if (i > 0 && j > 0) {
+      if (grid[i - 1][j - 1] === true) {
+        amountOfNeighbors++;
+      }
+    }
+    if (i > 0 && (j < grid[i].length - 1)) {
+      if (grid[i - 1][j + 1] === true) {
+        amountOfNeighbors++;
+      }
+    }
+
     if (i < grid.length - 1) {
       if (grid[i + 1][j] === true) {
         amountOfNeighbors++;
       }
     }
+    if ((i < grid.length - 1) && j > 0) {
+      if (grid[i + 1][j - 1] === true) {
+        amountOfNeighbors++;
+      }
+    }
+
+    if ((i < grid.length - 1) && (j < grid[i].length - 1)) {
+      if (grid[i + 1][j + 1] === true) {
+        amountOfNeighbors++;
+      }
+    }
+
     if (j > 0) {
       if (grid[i][j - 1] === true) {
         amountOfNeighbors++;
@@ -73,30 +95,19 @@ class App extends Component {
         amountOfNeighbors++;
       }
     }
-    if (i > 0 && j > 0) {
-      if (grid[i - 1][j - 1] === true) {
-        amountOfNeighbors++;
+
+    var willLive = false
+    if (grid[i][j] === true) {
+      if (amountOfNeighbors === 2 || amountOfNeighbors === 3) {
+        willLive = true;
       }
     }
-    if ((i < grid.length - 1) && j > 0) {
-      if (grid[i + 1][j - 1] === true) {
-        amountOfNeighbors++;
+    else if (!grid[i][j]) {
+      if (amountOfNeighbors === 3) {
+        willLive = true;
       }
     }
-    if (i > 0 && (j < grid[i].length - 1)) {
-      if (grid[i - 1][j + 1] === true) {
-        amountOfNeighbors++;
-      }
-    }
-    if ((i < grid.length - 1) && (j < grid[i].length - 1)) {
-      if (grid[i + 1][j + 1] === true) {
-        amountOfNeighbors++;
-      }
-    }
-    if (amountOfNeighbors === 3 || amountOfNeighbors === 2) {
-      return true;
-    }
-    return false;
+    return willLive;
 }
 
   render() {
