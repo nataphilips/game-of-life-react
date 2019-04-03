@@ -1,28 +1,46 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faStarHalfAlt, faEraser } from '@fortawesome/free-solid-svg-icons';
+
+library.add(faStarHalfAlt, faEraser);
 
 class App extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      grid: this.createGrid(25, 40),
+      x: 25,
+      y: 40,
+      grid: [],
+      interval: null,
+      playing: false,
     }
   }
 
   componentDidMount() {
-    setInterval(() => {
-      var newGrid = this.newDay(this.state.grid);
-      this.setState({grid: newGrid})
-    }, 100);
+    this.createGridZero();
+ }
+
+  gridShape(x, y) {
+    return [...Array(x).keys()].map(x => [...Array(y).keys()])
   }
 
-  createGrid(x, y) {
-    var grid = [...Array(x).keys()]
-      .map(x => [...Array(y).keys()]
-        .map(y => Math.random() < 0.25)
-      );
-    return grid;
+  createGridZero() {
+    const x = this.state.x;
+    const y = this.state.y;
+    var grid = this.gridShape(x, y).map(x => x.map(y => false))
+
+    this.setState({ grid });
+  }
+
+  randomizeGrid() {
+    const x = this.state.x;
+    const y = this.state.y;
+    var grid = this.gridShape(x, y).map(x => x.map(y => Math.random() < 0.25))
+
+    this.setState({ grid });
   }
 
   renderRow(row) {
@@ -37,6 +55,18 @@ class App extends Component {
     return (<Cell alive={cell}></Cell>);
   }
 
+  stop() {
+    clearInterval(this.state.interval);
+  }
+
+  start() {
+    const interval = setInterval(() => {
+      var newGrid = this.newDay(this.state.grid);
+      this.setState({grid: newGrid})
+    }, 100);
+
+    this.setState({ interval, playing: true });
+  }
 
   newDay(grid) {
     var newCondition = [];
@@ -108,16 +138,27 @@ class App extends Component {
       }
     }
     return willLive;
-}
+  }
 
   render() {
     return (
-      <div>
-        <button> CLICK </button>
+      <AppBody>
         <Grid>
           {this.state.grid.map(x => this.renderRow(x))}
         </Grid>
-      </div>
+        <ButtonContainer>
+          <Button onClick={() => this.randomizeGrid(25, 40)}>
+            <FontAwesomeIcon icon="star-half-alt" />
+            Randomize
+          </Button>
+          <Button onClick={() => this.createGridZero(25, 40)}>
+            <FontAwesomeIcon icon="eraser" />
+            Clear
+          </Button>
+          <Button onClick={() => this.start()}>Start</Button>
+          <Button onClick={() => this.stop()}>Pause</Button>
+        </ButtonContainer>
+      </AppBody>
     );
   }
 }
@@ -125,10 +166,20 @@ class App extends Component {
 const Flex = styled.div`
   display: flex;
 `
+
+
+const AppBody = styled(Flex)`
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+  justify-content: center;
+  align-items: center;
+`
+
 const Grid = styled(Flex)`
   text-align: center;
   flex-direction: column;
-  height: 100vh;
+  height: 60vh;
   width: 100vw;
   justify-content: center;
   align-items: center;
@@ -147,5 +198,19 @@ const Cell = styled(Flex)`
     background: green;
   `}
 `
+const ButtonContainer = styled(Flex)`
+  flex-direction: column;
+  width: 50%;
+  justify-content: center;
+  align-items: stretch;
+  height: 42px;
+  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: center;
+`
+const Button = styled.button`
+  height: 40px;
+`
+
 
 export default App;
