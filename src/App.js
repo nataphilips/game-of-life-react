@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import logo from './unicorno.png';
+import background from './glitter2.jpg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faStarHalfAlt, faEraser } from '@fortawesome/free-solid-svg-icons';
+import { faStarHalfAlt, faEraser, faPlay, faPause } from '@fortawesome/free-solid-svg-icons';
 
-library.add(faStarHalfAlt, faEraser);
+library.add(faStarHalfAlt, faEraser, faPlay, faPause);
 
 class App extends Component {
   constructor(props) {
@@ -25,6 +27,15 @@ class App extends Component {
 
   gridShape(x, y) {
     return [...Array(x).keys()].map(x => [...Array(y).keys()])
+  }
+
+  toggle() {
+    if (this.state.playing === false) {
+      this.start();
+    }
+    else {
+      this.stop();
+    }
   }
 
   createGridZero() {
@@ -57,6 +68,7 @@ class App extends Component {
 
   stop() {
     clearInterval(this.state.interval);
+    this.setState({ playing: false });
   }
 
   start() {
@@ -143,6 +155,10 @@ class App extends Component {
   render() {
     return (
       <AppBody>
+        <Header>
+          <Logo src={logo}/>
+          AWESOME UNICORN GAME OF LIFE
+        </Header>
         <Grid>
           {this.state.grid.map(x => this.renderRow(x))}
         </Grid>
@@ -155,8 +171,9 @@ class App extends Component {
             <FontAwesomeIcon icon="eraser" />
             Clear
           </Button>
-          <Button onClick={() => this.start()}>Start</Button>
-          <Button onClick={() => this.stop()}>Pause</Button>
+          <Button onClick={() => this.toggle()}>
+            <FontAwesomeIcon icon={this.state.playing ? "pause" : "play"} />
+          </Button>
         </ButtonContainer>
       </AppBody>
     );
@@ -166,12 +183,29 @@ class App extends Component {
 const Flex = styled.div`
   display: flex;
 `
-
-
 const AppBody = styled(Flex)`
   flex-direction: column;
   height: 100vh;
   width: 100vw;
+  justify-content: space-evenly;
+  align-items: center;
+  background-image: url(${background});
+`
+const Header = styled(Flex)`
+  text-align: center;
+  flex-direction: column;
+  height: 30vh;
+  width: 100vw;
+  justify-content: center;
+  align-items: center;
+  background-color: #FAC6DD;
+  font-size: 42px;
+  margin-bottom: 5px;
+`
+const Logo = styled.img`
+  text-align: center;
+  flex-direction: column;
+  height: 22vh;
   justify-content: center;
   align-items: center;
 `
@@ -179,7 +213,7 @@ const AppBody = styled(Flex)`
 const Grid = styled(Flex)`
   text-align: center;
   flex-direction: column;
-  height: 60vh;
+  height: 62vh;
   width: 100vw;
   justify-content: center;
   align-items: center;
@@ -190,12 +224,20 @@ const Row = styled(Flex)`
   justify-content: center;
   align-items: center;
 `
+const colors = [
+  '#dbb3f2',
+  '#f2d1f4',
+  '#ebfeff',
+  '#d3f0ff',
+  '#f9bcdb'
+];
 const Cell = styled(Flex)`
   height: 1em;
   width: 1em;
-  border: 1px solid grey;
+  border: 0.5px solid #a5a5a5;
+  background: transparent;
   ${props => props.alive && `
-    background: green;
+    background: ${colors[Math.floor(Math.random() * (colors.length))]};
   `}
 `
 const ButtonContainer = styled(Flex)`
@@ -203,13 +245,13 @@ const ButtonContainer = styled(Flex)`
   width: 50%;
   justify-content: center;
   align-items: stretch;
-  height: 42px;
+  height: 35px;
   flex-wrap: wrap;
   flex-direction: column;
   justify-content: center;
 `
 const Button = styled.button`
-  height: 40px;
+  height: 30px;
 `
 
 
