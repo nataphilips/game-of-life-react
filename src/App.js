@@ -91,7 +91,6 @@ class App extends Component {
     return newCondition;
   }
 
-
   willBeAlive(i, j, grid) {
     var amountOfNeighbors = 0;
     if (i > 0) {
@@ -194,7 +193,7 @@ const AppBody = styled(Flex)`
 const Header = styled(Flex)`
   text-align: center;
   flex-direction: column;
-  height: 30vh;
+  height: 25vh;
   width: 100vw;
   justify-content: center;
   align-items: center;
@@ -205,7 +204,7 @@ const Header = styled(Flex)`
 const Logo = styled.img`
   text-align: center;
   flex-direction: column;
-  height: 22vh;
+  height: 18vh;
   justify-content: center;
   align-items: center;
 `
@@ -236,6 +235,7 @@ const Cell = styled(Flex)`
   width: 1em;
   border: 0.5px solid #a5a5a5;
   background: transparent;
+  border-radius: 50%;
   ${props => props.alive && `
     background: ${colors[Math.floor(Math.random() * (colors.length))]};
   `}
@@ -251,20 +251,20 @@ const ButtonContainer = styled(Flex)`
   justify-content: center;
 `
 const Button = styled.button`
-background-color:#FAC6DD;
-height: 50px;
-color: black;
-font-size: 26px;
-text-align: center;
-padding: 7px 5px;
-border: none;
-border-radius: 15px;
-margin: 3px;
-font-family: 'Gochi Hand', cursive;
-letter-spacing: 1px;
-font-weight: 500;
-cursor: pointer;
-outline: 0;
+  background-color:#FAC6DD;
+  height: 50px;
+  color: black;
+  font-size: 26px;
+  text-align: center;
+  padding: 7px 5px;
+  border: none;
+  border-radius: 15px;
+  margin: 3px;
+  font-family: 'Gochi Hand', cursive;
+  letter-spacing: 1px;
+  font-weight: 500;
+  cursor: pointer;
+  outline: 0;
 `
 
 
