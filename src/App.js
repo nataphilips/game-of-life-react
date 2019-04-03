@@ -165,11 +165,11 @@ class App extends Component {
         <ButtonContainer>
           <Button onClick={() => this.randomizeGrid(25, 40)}>
             <FontAwesomeIcon icon="star-half-alt" />
-            Randomize
+            &nbsp;Randomize
           </Button>
           <Button onClick={() => this.createGridZero(25, 40)}>
             <FontAwesomeIcon icon="eraser" />
-            Clear
+            &nbsp;Clear
           </Button>
           <Button onClick={() => this.toggle()}>
             <FontAwesomeIcon icon={this.state.playing ? "pause" : "play"} />
@@ -245,13 +245,26 @@ const ButtonContainer = styled(Flex)`
   width: 50%;
   justify-content: center;
   align-items: stretch;
-  height: 35px;
+  height: 100px;
   flex-wrap: wrap;
   flex-direction: column;
   justify-content: center;
 `
 const Button = styled.button`
-  height: 30px;
+background-color:#FAC6DD;
+height: 50px;
+color: black;
+font-size: 26px;
+text-align: center;
+padding: 7px 5px;
+border: none;
+border-radius: 15px;
+margin: 3px;
+font-family: 'Gochi Hand', cursive;
+letter-spacing: 1px;
+font-weight: 500;
+cursor: pointer;
+outline: 0;
 `
 
 
