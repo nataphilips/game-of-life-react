@@ -48,7 +48,7 @@ class App extends Component {
   renderRow(row) {
     return (
       <Row>
-       {row.map(x => this.renderCell(x))}
+        {row.map(x => this.renderCell(x))}
       </Row>
     );
   }
