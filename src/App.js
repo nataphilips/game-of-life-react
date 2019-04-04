@@ -29,15 +29,6 @@ class App extends Component {
     return [...Array(x).keys()].map(x => [...Array(y).keys()])
   }
 
-  toggle() {
-    if (this.state.playing === false) {
-      this.start();
-    }
-    else {
-      this.stop();
-    }
-  }
-
   createGridZero() {
     const x = this.state.x;
     const y = this.state.y;
@@ -57,13 +48,22 @@ class App extends Component {
   renderRow(row) {
     return (
       <Row>
-        {row.map(x => this.renderCell(x))}
+       {row.map(x => this.renderCell(x))}
       </Row>
     );
   }
 
   renderCell(cell) {
     return (<Cell alive={cell}></Cell>);
+  }
+
+  toggle() {
+    if (this.state.playing === false) {
+      this.start();
+    }
+    else {
+      this.stop();
+    }
   }
 
   stop() {
@@ -108,7 +108,6 @@ class App extends Component {
         amountOfNeighbors++;
       }
     }
-
     if (i < grid.length - 1) {
       if (grid[i + 1][j] === true) {
         amountOfNeighbors++;
@@ -119,13 +118,11 @@ class App extends Component {
         amountOfNeighbors++;
       }
     }
-
     if ((i < grid.length - 1) && (j < grid[i].length - 1)) {
       if (grid[i + 1][j + 1] === true) {
         amountOfNeighbors++;
       }
     }
-
     if (j > 0) {
       if (grid[i][j - 1] === true) {
         amountOfNeighbors++;
@@ -136,7 +133,6 @@ class App extends Component {
         amountOfNeighbors++;
       }
     }
-
     var willLive = false
     if (grid[i][j] === true) {
       if (amountOfNeighbors === 2 || amountOfNeighbors === 3) {
@@ -266,6 +262,4 @@ const Button = styled.button`
   cursor: pointer;
   outline: 0;
 `
-
-
 export default App;
