@@ -8,11 +8,13 @@ Beware it has been spiced up with the Great and Terrible Unicorn CSS :) Which tu
 
 ### `code to show`
 
--Basic React syntax
--Styled Components syntax
--How to randomize stuff
--FontAwesome icons
--Flexbox
+* Basic React syntax
+* Styled Components syntax
+* How to randomize stuff
+* FontAwesome icons
+* Flexbox
+
+![GameOfLifeScreenshot](https://i.ibb.co/WK9y3Cp/Game-Of-Life.png)
 
 Are your eyes ready? [Click to see](https://my-game-of-life-react.herokuapp.com/) 
 
